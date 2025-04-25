@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -174,8 +173,7 @@ const LiveInterview = () => {
               </div>
               <Progress 
                 value={timeRemainingPercent} 
-                className="h-1.5 w-32" 
-                indicatorClassName={remainingTime < 300 ? "bg-aiorange-500" : undefined}
+                className={`h-1.5 w-32 ${remainingTime < 300 ? "bg-aiorange-500" : ""}`}
               />
             </div>
             

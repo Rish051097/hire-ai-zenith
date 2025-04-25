@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { useSidebar } from '@/components/ui/sidebar';
+import { useSidebar, SidebarContext } from '@/components/ui/sidebar';
 
 interface HeaderProps {
   transparent?: boolean;
@@ -25,11 +25,19 @@ const Header = ({ transparent = false }: HeaderProps) => {
     try {
       return useSidebar();
     } catch (e) {
-      return { setSidebarOpen: () => {} };
+      return { 
+        state: "expanded",
+        open: true,
+        setOpen: () => {},
+        openMobile: false,
+        setOpenMobile: () => {},
+        isMobile: false,
+        toggleSidebar: () => {}
+      } as SidebarContext;
     }
   })();
 
-  const { setSidebarOpen } = sidebarContext;
+  const { toggleSidebar } = sidebarContext;
 
   return (
     <header className={`w-full py-4 px-4 md:px-8 border-b ${
@@ -41,7 +49,7 @@ const Header = ({ transparent = false }: HeaderProps) => {
             variant="ghost"
             size="icon"
             className="md:hidden"
-            onClick={() => setSidebarOpen && setSidebarOpen((open: boolean) => !open)}
+            onClick={toggleSidebar}
           >
             <Menu className="h-5 w-5" />
           </Button>
