@@ -19,7 +19,17 @@ interface HeaderProps {
 }
 
 const Header = ({ transparent = false }: HeaderProps) => {
-  const { setSidebarOpen } = useSidebar();
+  // Use try/catch to safely use the sidebar context
+  // This allows the Header to work both inside and outside of SidebarProvider
+  const sidebarContext = (() => {
+    try {
+      return useSidebar();
+    } catch (e) {
+      return { setSidebarOpen: () => {} };
+    }
+  })();
+
+  const { setSidebarOpen } = sidebarContext;
 
   return (
     <header className={`w-full py-4 px-4 md:px-8 border-b ${
@@ -31,7 +41,7 @@ const Header = ({ transparent = false }: HeaderProps) => {
             variant="ghost"
             size="icon"
             className="md:hidden"
-            onClick={() => setSidebarOpen(open => !open)}
+            onClick={() => setSidebarOpen && setSidebarOpen((open: boolean) => !open)}
           >
             <Menu className="h-5 w-5" />
           </Button>

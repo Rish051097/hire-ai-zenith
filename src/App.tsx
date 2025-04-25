@@ -26,7 +26,11 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          {/* Landing page route - standalone without sidebar */}
           <Route path="/" element={<Landing />} />
+          
+          {/* Full screen routes - no header or sidebar */}
+          <Route path="/interview/live/:id" element={<LiveInterview />} />
           
           {/* Dashboard routes - these show the header and sidebar */}
           <Route path="*" element={
@@ -46,9 +50,6 @@ const App = () => (
               </div>
             </SidebarProvider>
           } />
-          
-          {/* Full screen routes - no header or sidebar */}
-          <Route path="/interview/live/:id" element={<LiveInterview />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
